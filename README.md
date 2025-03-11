@@ -1,5 +1,9 @@
 # Super-Stable-Matching-Algorithm
 Super Stable Matching Algorithm
+
+NOTE: TO run the webpage, run python3 graphical_interface.py      
+
+
 This project implements Super Stable Matching, based on Robert W. Irving's paper on Stable Marriage with Indifference. The goal is to find a stable pairing where no two participants strictly prefer each other over their assigned match.
  
 1. Algorithm - stable_super_matching
