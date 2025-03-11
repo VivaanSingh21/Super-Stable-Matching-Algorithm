@@ -56,7 +56,7 @@ def initialize_preferences(raw_preferences):
 def is_valid_matching(result_dict):
     """
     Checks if every woman is mapped to a unique man.
-    Returns True if it's a valid stable matching, otherwise False.
+    Returns True if it's a valid matching, otherwise False.
     """
     seen_men = set()  # Store men already assigned
     for woman, men in result_dict.items():
@@ -181,6 +181,8 @@ def stable_super_matching(men_preferences, women_preferences):
 
 
 #Termination case is when some D1[Mx] becomes empty - so we need to find the condition under which we remove elements from D1[Mx]
+
+# The following are test cases
 men_preferences = {
     'M1': [['W1', 'W2'], 'W3', 'W4'],
     'M2': ['W2', 'W3', 'W1', 'W4'],

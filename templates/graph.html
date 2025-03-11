@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stable Matching Graph</title>
+
     <style>
+        /* Style the graph image to be centered and properly sized */
         img {
             display: block;
             margin: auto;
-            width: 80%;
+            width: 80%; /* Adjust width for better display */
         }
+
+        /* Style for the popup box that shows preferences when clicking an edge */
         .popup {
             display: none;
             position: fixed;
@@ -21,6 +25,8 @@
             border: 2px solid black;
             box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
         }
+
+        /* Style for the close button inside the popup */
         .popup button {
             margin-top: 10px;
         }
@@ -30,11 +36,13 @@
 
     <h1>Super Stable Matching Graph</h1>
     
+    <!-- Display the generated graph image -->
     <img id="graph-image" src="{{ img_path }}" usemap="#graphmap">
     
+    <!-- Link to go back and generate new preferences -->
     <p><a href="/">Generate New Preferences</a></p>
 
-    <!-- Popup box for displaying preferences -->
+    <!-- Popup box for displaying preferences when clicking an edge -->
     <div id="popup" class="popup">
         <p id="popup-content"></p>
         <button onclick="closePopup()">Close</button>
@@ -43,27 +51,30 @@
     <script>
         let edgeData = {};  // Dictionary to store edges and their preferences
 
+        // Function to load edge data from JSON file
         async function loadEdgeData() {
             try {
-                const response = await fetch("{{ edge_info_path }}");
-                edgeData = await response.json();
-                console.log("Edge Data Loaded:", edgeData);
+                const response = await fetch("{{ edge_info_path }}"); // Fetch edge preference data
+                edgeData = await response.json(); // Parse JSON response
+                console.log("Edge Data Loaded:", edgeData); // Debugging log
             } catch (error) {
-                console.error("Error loading edge data:", error);
+                console.error("Error loading edge data:", error); // Handle errors if loading fails
             }
         }
 
+        // Function to display the popup with edge details
         function showPopup(edgeKey) {
             if (edgeData[edgeKey]) {
-                let data = JSON.parse(edgeData[edgeKey]);
+                let data = JSON.parse(edgeData[edgeKey]); // Parse stored JSON data
                 let content = `<strong>${data.man} and ${data.woman}</strong><br>
                                <strong>${data.man}'s Preferences:</strong> ${data.man_prefs}<br>
                                <strong>${data.woman}'s Preferences:</strong> ${data.woman_prefs}`;
-                document.getElementById("popup-content").innerHTML = content;
-                document.getElementById("popup").style.display = "block";
+                document.getElementById("popup-content").innerHTML = content; // Insert content in popup
+                document.getElementById("popup").style.display = "block"; // Show the popup
             }
         }
 
+        // Function to close the popup when the user clicks "Close"
         function closePopup() {
             document.getElementById("popup").style.display = "none";
         }
@@ -71,10 +82,10 @@
         // Load edge data when the page loads
         window.onload = loadEdgeData;
 
-        // Simulate clicking edges (replace this with real mapping logic)
+        // Simulate clicking edges (this should later be replaced with real interaction logic)
         document.getElementById("graph-image").addEventListener("click", function() {
-            let randomEdge = Object.keys(edgeData)[Math.floor(Math.random() * Object.keys(edgeData).length)];
-            showPopup(randomEdge);
+            let randomEdge = Object.keys(edgeData)[Math.floor(Math.random() * Object.keys(edgeData).length)]; // Pick a random edge
+            showPopup(randomEdge); // Show details of the selected edge
         });
     </script>
 
