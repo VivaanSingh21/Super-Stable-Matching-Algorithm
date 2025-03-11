@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Matching Graph</title>
+    <style>
+        img {
+            display: block;
+            margin: auto;
+            width: 80%;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 15px;
+            border: 2px solid black;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+        }
+        .popup button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Super Stable Matching Graph</h1>
+    
+    <img id="graph-image" src="{{ img_path }}" usemap="#graphmap">
+    
+    <p><a href="/">Generate New Preferences</a></p>
+
+    <!-- Popup box for displaying preferences -->
+    <div id="popup" class="popup">
+        <p id="popup-content"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        let edgeData = {};  // Dictionary to store edges and their preferences
+
+        async function loadEdgeData() {
+            try {
+                const response = await fetch("{{ edge_info_path }}");
+                edgeData = await response.json();
+                console.log("Edge Data Loaded:", edgeData);
+            } catch (error) {
+                console.error("Error loading edge data:", error);
+            }
+        }
+
+        function showPopup(edgeKey) {
+            if (edgeData[edgeKey]) {
+                let data = JSON.parse(edgeData[edgeKey]);
+                let content = `<strong>${data.man} and ${data.woman}</strong><br>
+                               <strong>${data.man}'s Preferences:</strong> ${data.man_prefs}<br>
+                               <strong>${data.woman}'s Preferences:</strong> ${data.woman_prefs}`;
+                document.getElementById("popup-content").innerHTML = content;
+                document.getElementById("popup").style.display = "block";
+            }
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Load edge data when the page loads
+        window.onload = loadEdgeData;
+
+        // Simulate clicking edges (replace this with real mapping logic)
+        document.getElementById("graph-image").addEventListener("click", function() {
+            let randomEdge = Object.keys(edgeData)[Math.floor(Math.random() * Object.keys(edgeData).length)];
+            showPopup(randomEdge);
+        });
+    </script>
+
+</body>
+</html>

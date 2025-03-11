@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences</title>
+</head>
+<body>
+    <h1>Generated Preferences</h1>
+    
+    <h2>Men's Preferences:</h2>
+    <ul>
+        {% for man, prefs in men_prefs.items() %}
+            <li>{{ man }}: {{ prefs }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Women's Preferences:</h2>
+    <ul>
+        {% for woman, prefs in women_prefs.items() %}
+            <li>{{ woman }}: {{ prefs }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="/match" method="post">
+        <input type="hidden" name="n" value="4">
+        <button type="submit">Run Stable Matching</button>
+    </form>
+
+    <a href="/">Generate New Preferences</a>
+</body>
+</html>
