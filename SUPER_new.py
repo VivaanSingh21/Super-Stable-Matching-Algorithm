@@ -238,7 +238,7 @@ women_preferences4 = {
 
 
 
-result = stable_super_matching(men_preferences4, women_preferences4)
+result = stable_super_matching(men_preferences, women_preferences)
 print(result)
 '''
 if result:
