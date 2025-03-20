@@ -1,0 +1,1 @@
+web: gunicorn graphical_interface:app
